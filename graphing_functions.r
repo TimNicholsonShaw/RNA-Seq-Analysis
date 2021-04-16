@@ -2,6 +2,7 @@
 
 # imports
 library(ggplot2)
+library("RColorBrewer")
 
 plot_pca <- function(DESeq_object, metadata) {
     # Taken from UCSD BIOM262 2017
@@ -21,8 +22,24 @@ plot_pca <- function(DESeq_object, metadata) {
     return(p)
 }
 
-plot_sample_distances <- function(DESeq_object) {
+plot_sample_distances <- function(dds) {
+    # Got this code from UCSD BIOM262 course 2017
+    rld <- rlog(dds)
+    sampleDists <- dist(t(assay(rld)))
+    sampleDistMatrix <- as.matrix(sampleDists)
 
+    rownames(sampleDistMatrix) <- paste(rld$id)
+
+    colnames(sampleDistMatrix) <- paste(rld$id)
+
+    colors <- colorRampPalette( rev(brewer.pal(9, "Blues")) )(255)
+
+    plt <- heatmap(sampleDistMatrix,
+            clustering_distance_rows=sampleDists,
+            clustering_distance_cols=sampleDists,
+            col=colors)
+
+    return(plt)
 }
 
 plot_volcano <- function(results_table) {

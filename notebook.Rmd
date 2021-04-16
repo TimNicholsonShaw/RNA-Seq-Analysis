@@ -1,13 +1,14 @@
 ---
-title: "RNA-Seq Analysis"
+title: "TLS135 - RNASeq2 Electric Boogaloo"
 output: html_notebook
 ---
 This notebook uses function and code available from https://github.com/TimNicholsonShaw/RNA-Seq-Analysis
 
+I'm attempting to reanalyze my RNASeq data to see if anything can be gleaned from it
 
+Pre-processing data
 ```{r}
-plot(cars)
-```
 
+```
 
 
