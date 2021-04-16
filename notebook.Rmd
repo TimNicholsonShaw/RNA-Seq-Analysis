@@ -1,0 +1,13 @@
+---
+title: "RNA-Seq Analysis"
+output: html_notebook
+---
+This notebook uses function and code available from https://github.com/TimNicholsonShaw/RNA-Seq-Analysis
+
+
+```{r}
+plot(cars)
+```
+
+
+
