@@ -38,5 +38,12 @@ make_DESeq_object <- function(genesig_df, meta_data, design) {
 }
 
 make_results_table <- function(DESeq_object, contrast_vector) {
+    # contrast should be in the form of c(column_name, perturbation, control)
+    res <- results(DESeq_object, contrast=contrast_vector)
 
+    return(res[order(res$padj),])
+}
+
+calculate_tpm <- function(genesig_df) {
+    
 }
