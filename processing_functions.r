@@ -45,5 +45,12 @@ make_results_table <- function(DESeq_object, contrast_vector) {
 }
 
 calculate_tpm <- function(genesig_df) {
-    
+        counts <- genesig_df[-(1:2)]
+        counts <- counts/(genesig_df$Length/1000) # normalize by kilobase length
+
+        sum_columns = colSums(counts)
+        for (i in (1:length(counts))) { # normalize to per million reads
+            counts[i] <- (counts[i] / sum_columns[i]) * 1000000
+        }
+        return(cbind(genesig_df[1:2], counts))
 }
