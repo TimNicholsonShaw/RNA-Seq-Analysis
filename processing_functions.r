@@ -9,8 +9,8 @@ library(tidyverse)
 make_genesig_from_file <- function (file_loc, ...) {
     # extra arguments should contain mappings for changing names
     # will likely only work for featureCounts output
-    genesig_df <- read_tsv(file_loc, col_names=T, comment="#")
-    genesig_df <- rename(genesig_df, ...)
+    genesig_df <- read.csv(file_loc, header=T, sep="\t", comment="#")
+    genesig_df <- rename(genesig_df, ...)[complete.cases(gene_sig),] #only things with everything
 
     # drop unused columns
     # still hang onto length, because we can use it in TPM calculations
@@ -24,11 +24,17 @@ make_meta_data <- function(genesig_df, ...) {
     # Drops geneid and length
     sample_names <- colnames(genesig_df[-(1:2)])
 
-    return(data.frame(Sample=sample_names, ...))
+    return(data.frame(id=sample_names, ...))
 }
 
 make_DESeq_object <- function(genesig_df, meta_data, design) {
+    genesig_df <- select(genesig_df, -Length)
 
+    dds <- DESeqDataSetFromMatrix(countData=genesig_df,
+                                colData=meta_data,
+                                design=design,
+                                tidy=T)
+    return(DESeq(dds))
 }
 
 make_results_table <- function(DESeq_object, contrast_vector) {
