@@ -10,7 +10,7 @@ make_genesig_from_file <- function (file_loc, ...) {
     # extra arguments should contain mappings for changing names
     # will likely only work for featureCounts output
     genesig_df <- read.csv(file_loc, header=T, sep="\t", comment="#")
-    genesig_df <- rename(genesig_df, ...)[complete.cases(gene_sig),] #only things with everything
+    genesig_df <- rename(genesig_df, ...)[complete.cases(genesig_df),] #only things with everything
 
     # drop unused columns
     # still hang onto length, because we can use it in TPM calculations
